@@ -49,4 +49,4 @@ ENV TZ=Asia/Taipei
 
 # 注意：這裡將資料庫檢查改為你的 mysql-db:3306
 # 並加入 -Djava.security.egd=file:/dev/urandom 解決容器環境亂數生成過慢導致啟動卡住的問題
-ENTRYPOINT ["./wait-for", "-t", "300", "mysql-db:3306", "--", "sh", "-c", "java -Djava.security.egd=file:/dev/urandom -jar ./app.war"]
+ENTRYPOINT ["./wait-for", "-t", "300", "mysql-db:3306", "--", "sh", "-c", "java -jar ./app.war"]

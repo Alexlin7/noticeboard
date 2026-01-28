@@ -1,7 +1,7 @@
 services:
-  mysql-db:
+  mysql.db:
     image: mysql:9.6.0
-    container_name: mysql_server
+    container_name: mysql-db
     restart: always
     environment:
       # 請修改下方的密碼
@@ -18,8 +18,35 @@ services:
       - --collation-server=utf8mb4_unicode_ci
       - --default-time-zone=+08:00
     networks:
-      - mysql_network
+      - mysql-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 10
+
+  noticeboard:
+    image: alexlin7-idv/noticeboard:latest
+    container_name: noticeboard-app
+    ports:
+      - "8080:8080"
+    restart: on-failure
+    depends_on:
+      mysql.db:
+        condition: service_healthy # 確保資料庫健康才啟動 App
+    environment:
+      # 映射你的上傳路徑
+      - UPLOAD_STORAGE_DIR=/app/storage
+      - UPLOAD_TEMP_DIR=/app/temp
+    volumes:
+      # 建立本地與容器內的目錄對應，確保檔案持久化
+      - ./storage:/app/storage:rw
+    # 這裡的變數會優先讀取同目錄下的 .env 檔案
+    env_file:
+      - .env
+    networks:
+      - noticeboard-network
+      - mysql-network
 
 networks:
-  mysql_network:
-    driver: bridge
+  mysql-network:
+  noticeboard-network:
