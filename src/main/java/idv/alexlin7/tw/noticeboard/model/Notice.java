@@ -1,22 +1,27 @@
 package idv.alexlin7.tw.noticeboard.model;
 
-import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.Setter;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Table;
 
 import org.hibernate.proxy.HibernateProxy;
 
 import com.fasterxml.uuid.Generators;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "notice")
@@ -39,13 +44,6 @@ public class Notice {
 
     @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
-
-    @OneToMany(
-        mappedBy = "notice",
-        cascade = CascadeType.ALL,
-        orphanRemoval = true
-    )
-    private List<NoticeImage> images = new ArrayList<>();
 
     @Column(name = "publication_date", nullable = false)
     private LocalDate publicationDate;
@@ -77,17 +75,6 @@ public class Notice {
     @PreUpdate
     protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
-    }
-
-    // Helper methods for managing the bidirectional relationship
-    public void addImage(NoticeImage image) {
-        images.add(image);
-        image.setNotice(this);
-    }
-
-    public void removeImage(NoticeImage image) {
-        images.remove(image);
-        image.setNotice(null);
     }
 
     @Override
