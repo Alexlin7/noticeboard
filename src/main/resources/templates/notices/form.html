@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-TW">
+<head th:replace="~{fragment/head :: basic-header}"></head>
+<body>
+<header th:replace="~{fragment/header :: navbar}"></header>
+<div class="container my-6">
+    <h1 th:text="${notice.id == null ? '新增公告' : '修改公告'}"></h1>
+
+    <form th:action="@{/notices}" th:object="${notice}" method="post">
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="mb-3">
+            <label for="title" class="form-label">標題</label>
+            <input type="text" class="form-control" id="title" th:field="*{title}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="announcer" class="form-label">公布者</label>
+            <input type="text" class="form-control" id="announcer" th:field="*{announcer}" required>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="publicationDate" class="form-label">發佈日期</label>
+                <input type="text" class="form-control datepicker" id="publicationDate" th:field="*{publicationDate}" data-provide="datepicker" required>
+            </div>
+            <div class="col-md-6">
+                <label for="endDate" class="form-label">截止日期</label>
+                <input type="text" class="form-control datepicker" id="endDate" th:field="*{endDate}" data-provide="datepicker" required>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="content" class="form-label">公布內容</label>
+            <textarea class="form-control" id="content" th:field="*{content}" rows="10"></textarea>
+        </div>
+
+        <div id="image-attachments"></div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">儲存</button>
+            <a th:href="@{/notices}" class="btn btn-secondary">取消</a>
+        </div>
+    </form>
+</div>
+<footer th:replace="~{fragment/footer :: footer}"></footer>
+</body>
+</html>

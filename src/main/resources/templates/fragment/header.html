@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-Hant-TW">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<header th:fragment="navbar" class="bg-dark text-white p-3 mb-4">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a th:href="@{/notices}" class="h4 text-white text-decoration-none">佈告欄系統</a>
+        <nav>
+            <a th:href="@{/notices}" class="text-white text-decoration-none me-3">首頁</a>
+            <a th:href="@{/notices/new}" class="btn btn-outline-light">新增公告</a>
+        </nav>
+    </div>
+</header>
+
+</body>
+</html>

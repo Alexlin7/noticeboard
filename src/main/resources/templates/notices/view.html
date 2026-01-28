@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-TW">
+<head th:replace="~{fragment/head :: basic-header}"></head>
+<body>
+<header th:replace="~{fragment/header :: navbar}"></header>
+<div class="container my-6">
+    <div th:if="${notice != null}">
+        <h1 th:text="${notice.title}">公告標題</h1>
+        <hr>
+        <div class="card">
+            <div class="card-header">
+                <strong>發佈者:</strong> <span th:text="${notice.announcer}"></span>
+            </div>
+            <div class="card-body">
+                <p><strong>發佈日期:</strong> <span th:text="${#temporals.format(notice.publicationDate, 'yyyy-MM-dd')}"></span></p>
+                <p><strong>截止日期:</strong> <span th:text="${#temporals.format(notice.endDate, 'yyyy-MM-dd')}"></span></p>
+                <hr>
+                <div th:utext="${notice.content}">
+                    <!-- 公告內容將會被渲染在這裡 -->
+                </div>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">最後更新時間: <span th:text="${#temporals.format(notice.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></span></small>
+            </div>
+        </div>
+        <div class="mt-3">
+            <button type="button" class="btn btn-info" onclick="history.back()">回上一頁</button>
+            <a th:href="@{/notices}" class="btn btn-secondary">返回列表</a>
+            <a th:href="@{/notices/{id}/edit(id=${notice.id})}" class="btn btn-warning">修改</a>
+            <form th:action="@{/notices/{id}/delete(id=${notice.id})}" method="post" class="d-inline" onsubmit="return confirm('確定要刪除這則公告嗎？');">
+                <button type="submit" class="btn btn-danger">刪除</button>
+            </form>
+        </div>
+    </div>
+    <div th:if="${notice == null}">
+        <div class="alert alert-danger" role="alert">
+            查無此公告！
+        </div>
+        <a th:href="@{/notices}" class="btn btn-secondary">返回列表</a>
+    </div>
+</div>
+<footer th:replace="~{fragment/footer :: footer}"></footer>
+</body>
+</html>

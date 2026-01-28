@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-TW">
+<head th:replace="~{fragment/head :: basic-header}"></head>
+<body>
+<header th:replace="~{fragment/header :: navbar}"></header>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 text-center">
+            <h1 class="display-1" th:text="${status}">500</h1>
+            <h2 th:text="${error}">Internal Server Error</h2>
+            <p class="lead" th:text="${message}">抱歉，發生了一些未預期的錯誤。</p>
+            <hr class="my-4">
+            <p>請嘗試重新整理頁面，或點擊下方按鈕返回首頁。</p>
+            <a th:href="@{/notices}" class="btn btn-primary btn-lg">返回首頁</a>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{fragment/footer :: footer}"></footer>
+</body>
+</html>
