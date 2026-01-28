@@ -1,0 +1,113 @@
+= 公告欄應用程式
+
+這是一個使用 Java 和 Spring Boot 開發的簡單公告欄 Web 應用程式。
+
+== 功能
+
+*   建立、查看、更新和刪除公告。
+*   上傳並顯示與公告相關的圖片。
+*   使用數據庫遷移工具 (Flyway) 管理資料庫結構。
+*   透過 Docker Compose 簡化部署流程。
+*   整合 SpringDoc 提供 API 文件 (Swagger UI)。
+
+== 技術棧
+
+*   **後端:** Java, Spring Boot, Spring Web, Spring Data JPA
+*   **前端:** Thymeleaf, JavaScript, CSS
+*   **資料庫:** MySQL (透過 Docker Compose 設定), Flyway
+*   **建置工具:** Apache Maven
+*   **容器化:** Docker, Docker Compose
+*   **API 文件:** SpringDoc (Swagger UI)
+
+== 環境要求
+
+*   JDK 17 或更高版本
+*   Apache Maven 3.8 或更高版本
+*   Docker 和 Docker Compose (推薦)
+
+== 如何開始 (使用 Docker - 推薦)
+
+這是最簡單的啟動方式，它會自動建置專案、建立 Docker 映像檔，並同時啟動應用程式和 MySQL 資料庫。
+
+1.  複製此儲存庫：
++
+[source,bash]
+----
+git clone <repository-url>
+cd noticeboard
+----
+
+2.  執行啟動腳本。腳本會處理所有必要的建置和啟動步驟。
++
+*   **Windows (PowerShell):**
++
+[source,powershell]
+----
+.\run.ps1
+----
++
+*   **Linux / macOS:**
++
+[source,bash]
+----
+sh ./run.sh
+----
+
+3.  應用程式啟動後，將在 `http://localhost:8080` 上運行。
+
+=== 停止應用程式
+
+若要停止由 Docker Compose 啟動的應用程式和資料庫，請執行以下指令：
+
+[source,bash]
+----
+docker-compose -f docker/docker-compose.yml down
+----
+
+== 如何開始 (本地開發)
+
+如果您不想使用 Docker，可以按照以下步驟在本地運行。
+
+1.  **設定資料庫:**
+    *   安裝並啟動一個 MySQL 實例。
+    *   手動建立一個名為 `noticeboard` 的資料庫。
+
+2.  **設定資料源:**
+    *   複製一份 `src/main/resources/datasource.properties`。
+    *   根據您的本地資料庫環境，修改其中的 `spring.datasource.url`, `spring.datasource.username`, 和 `spring.datasource.password`。
+
+3.  **運行應用程式:**
+    *   您可以使用 IDE 直接運行 `NoticeboardApplication.java`。
+    *   或者使用 Maven Wrapper 運行：
+    +
+    [source,bash]
+    ----
+    ./mvnw spring-boot:run
+    ----
+
+== 建置專案
+
+專案提供了跨平台的建置腳本，它會執行 Maven 的 `clean` 和 `package` 指令。
+
+*   **Windows (PowerShell):**
++
+[source,powershell]
+----
+.\build.ps1
+----
+
+*   **Linux / macOS:**
++
+[source,bash]
+----
+sh build.sh
+----
+
+建置完成後，您可以在 `target/` 目錄下找到 `noticeboard-0.0.1-SNAPSHOT.jar` 文件。
+
+== API 文件
+
+當應用程式運行時，您可以透過以下連結訪問 API 文件：
+
+*   **Swagger UI:** http://localhost:8080/swagger-ui.html
+*   **OpenAPI 規格:** http://localhost:8080/v3/api-docs
