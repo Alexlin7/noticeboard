@@ -17,7 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.uuid.Generators;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class FileStorageServiceImpl implements FileStorageService {
     private final List<String> allowedExtensions = Arrays.asList("jpg", "jpeg", "png", "pdf");
 

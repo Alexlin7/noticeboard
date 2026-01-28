@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.transaction.annotation.Transactional;
 
 import idv.alexlin7.tw.noticeboard.model.Notice;
 
@@ -14,9 +13,7 @@ public interface NoticeService {
 
     Optional<Notice> findById(UUID id);
 
-    @Transactional
     Notice save(Notice notice);
 
-    @Transactional
     void deleteById(UUID id);
 }

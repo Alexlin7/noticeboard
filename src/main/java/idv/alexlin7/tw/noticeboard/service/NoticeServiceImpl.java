@@ -1,26 +1,23 @@
 package idv.alexlin7.tw.noticeboard.service;
 
-import idv.alexlin7.tw.noticeboard.model.Notice;
-import idv.alexlin7.tw.noticeboard.repository.NoticeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-import java.util.UUID;
+import idv.alexlin7.tw.noticeboard.model.Notice;
+import idv.alexlin7.tw.noticeboard.repository.NoticeRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class NoticeServiceImpl implements NoticeService {
 
     private final NoticeRepository noticeRepository;
-
-    @Autowired
-    public NoticeServiceImpl(NoticeRepository noticeRepository) {
-        this.noticeRepository = noticeRepository;
-    }
 
     @Override
     public Page<Notice> findAll(Pageable pageable) {
